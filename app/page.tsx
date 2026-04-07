@@ -56,7 +56,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="relative aspect-square md:aspect-auto h-[400px] md:h-[600px] bg-amber-100 rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 flex items-center justify-center border-4 border-white">
+          <div className="hidden md:flex relative aspect-square md:aspect-auto h-[400px] md:h-[600px] bg-amber-100 rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 items-center justify-center border-4 border-white">
              {/* Placeholder for cookie image */}
              <div className="text-amber-800 flex flex-col items-center gap-4 p-12 text-center">
                 <div className="w-32 h-32 bg-amber-200 rounded-full flex items-center justify-center animate-pulse">
