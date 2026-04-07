@@ -1,4 +1,5 @@
-import { Mail, MapPin, Clock, Instagram } from 'lucide-react';
+import { SiInstagram } from '@icons-pack/react-simple-icons';
+import { Mail, MapPin, Clock } from 'lucide-react';
 
 export default function ContactPage() {
   return (
@@ -49,7 +50,7 @@ export default function ContactPage() {
 
               <div className="flex items-start gap-6">
                 <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-900 shrink-0">
-                  <Instagram className="w-6 h-6" />
+                  <SiInstagram size={24} /> 
                 </div>
                 <div>
                   <h3 className="font-bold text-xl text-zinc-900 mb-1">Instagram</h3>
