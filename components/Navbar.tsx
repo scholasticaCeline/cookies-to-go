@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
@@ -12,14 +13,19 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Catalog', href: '/catalog' },
     { name: 'Review', href: '/review' },
-    { name: 'Contact', href: '/contact' },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-black text-amber-900 tracking-tighter hover:opacity-80 transition">
-          COOKIES TO GO
+        <Link href="/" className="hover:opacity-80 transition flex items-center">
+          <Image 
+            src="https://gjbrctwfehdmodvvwbbe.supabase.co/storage/v1/object/public/Logos/Logo%20Transparent.png" 
+            alt="Cookies To Go Logo" 
+            width={120} 
+            height={60} 
+            className="h-12 w-auto object-contain"
+          />
         </Link>
         
         {/* Desktop Links */}
