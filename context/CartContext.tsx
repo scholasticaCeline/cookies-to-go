@@ -23,34 +23,40 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('cookies_cart');
-      if (savedCart) {
-        try {
-          return JSON.parse(savedCart);
-        } catch (e) {
-          console.error('Failed to parse cart', e);
-        }
+  // 1. Start with an empty array. This fixes the Hydration error because 
+  // both Server and Client will render the same initial empty state.
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // 2. Load from localStorage only AFTER the first render (client-side only)
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cookies_cart');
+    if (savedCart) {
+      try {
+        setCart(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
       }
     }
-    return [];
-  });
+    setIsHydrated(true); // Mark that we are done loading
+  }, []);
 
-  // Save cart to localStorage whenever it changes
+  // 3. Save to localStorage whenever cart changes, but ONLY after hydration
   useEffect(() => {
-    localStorage.setItem('cookies_cart', JSON.stringify(cart));
-  }, [cart]);
+    if (isHydrated) {
+      localStorage.setItem('cookies_cart', JSON.stringify(cart));
+    }
+  }, [cart, isHydrated]);
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((i) => i.id === item.id);
       if (existingItem) {
         return prevCart.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 2 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prevCart, { ...item, quantity: 2 }];
+      return [...prevCart, { ...item, quantity: 1 }];
     });
   };
 
@@ -59,7 +65,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQuantity = (id: string, delta: number) => {
-    // Delta should be +2 or -2 to maintain multiples
     setCart((prevCart) =>
       prevCart
         .map((item) =>
@@ -72,7 +77,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clearCart = () => setCart([]);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  
+  // Pricing logic: 10k for one, 15k for a pair
+  const totalPrice = cart.reduce((sum, item) => {
+    const pairs = Math.floor(item.quantity / 2);
+    const remainder = item.quantity % 2;
+    const itemTotal = (pairs * 15000) + (remainder * 10000);
+    return sum + itemTotal;
+  }, 0);
 
   return (
     <CartContext.Provider

@@ -16,28 +16,28 @@ export default function CatalogPage() {
       name: 'Choco Chip',
       description: 'The timeless classic loaded with premium semi-sweet chocolate chips.',
       imageUrl: 'https://gjbrctwfehdmodvvwbbe.supabase.co/storage/v1/object/public/cookies-images/Ori1.jpg',
-      price: 7500,
+      price: 10000,
     },
     {
       id: 'dc-02',
       name: 'Double Choco',
       description: 'Rich cocoa dough packed with dark chocolate chunks for the ultimate indulgence.',
       imageUrl: 'https://gjbrctwfehdmodvvwbbe.supabase.co/storage/v1/object/public/cookies-images/Darkchoco.png',
-      price: 7500,
+      price: 10000,
     },
     {
       id: 'ma-03',
       name: 'Matcha',
       description: 'Earthy ceremonial grade matcha balanced with the crispiness of almonds.',
       imageUrl: 'https://gjbrctwfehdmodvvwbbe.supabase.co/storage/v1/object/public/cookies-images/Matcha.jpg',
-      price: 7500,
+      price: 10000,
     },
     {
       id: 'rv-04',
       name: 'Red Velvet',
       description: 'Soft, vibrant cocoa cookie with a hint of vanilla and white chocolate chips.',
       imageUrl: 'https://gjbrctwfehdmodvvwbbe.supabase.co/storage/v1/object/public/cookies-images/Redvelvet.png',
-      price: 7500,
+      price: 10000,
     },
   ];
 
@@ -49,7 +49,7 @@ export default function CatalogPage() {
           <h1 className="text-5xl font-black mb-4 tracking-tight text-center md:text-left">The Cookie Catalog</h1>
           <p className="text-zinc-400 text-xl max-w-2xl font-medium text-center md:text-left">
             All our cookies are baked in small batches to ensure the highest quality. 
-            Every <span className="text-white font-bold">2 cookies</span> are priced at <span className="text-white font-bold">15.000. Individual cookeis are priced at 10.000.</span>.
+            Every <span className="text-white font-bold">2 cookies</span> are priced at <span className="text-white font-bold">15.000</span>. Individual cookies are priced at <span className="text-white font-bold">10.000.</span>
           </p>
         </div>
       </section>

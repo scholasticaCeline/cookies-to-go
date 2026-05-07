@@ -124,25 +124,31 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             <>
               {/* Cart Items */}
               <div className="space-y-4">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4 bg-zinc-50 p-4 rounded-2xl border border-zinc-100">
-                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-white border border-zinc-200">
-                      <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
+                {cart.map((item) => {
+                  // Calculate specific row total for UI transparency
+                  const itemPairs = Math.floor(item.quantity / 2);
+                  const itemRemainder = item.quantity % 2;
+                  const rowTotal = (itemPairs * 15000) + (itemRemainder * 10000);
+
+                  return (
+                    <div key={item.id} className="flex items-center gap-4 bg-zinc-50 p-4 rounded-2xl border border-zinc-100">
+                      {/* ... image code ... */}
+                      <div className="flex-grow">
+                        <h4 className="font-bold text-zinc-900">{item.name}</h4>
+                        <p className="text-zinc-500 text-sm">
+                          {rowTotal.toLocaleString()} IDR total
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3 bg-white px-3 py-1 rounded-xl border border-zinc-100">
+                        {/* Change delta to -1 and +1 */}
+                        <button onClick={() => updateQuantity(item.id, -1)} className="text-zinc-400 hover:text-amber-900 font-bold px-1">-</button>
+                        <span className="font-black text-zinc-900 min-w-[1.5rem] text-center">{item.quantity}</span>
+                        <button onClick={() => updateQuantity(item.id, +1)} className="text-zinc-400 hover:text-amber-900 font-bold px-1">+</button>
+                      </div>
+                      {/* ... remove button ... */}
                     </div>
-                    <div className="flex-grow">
-                      <h4 className="font-bold text-zinc-900">{item.name}</h4>
-                      <p className="text-zinc-500 text-sm">{(item.price).toLocaleString()} IDR each</p>
-                    </div>
-                    <div className="flex items-center gap-3 bg-white px-3 py-1 rounded-xl border border-zinc-100">
-                      <button onClick={() => updateQuantity(item.id, -2)} className="text-zinc-400 hover:text-amber-900 font-bold px-1">-</button>
-                      <span className="font-black text-zinc-900 min-w-[1.5rem] text-center">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, 2)} className="text-zinc-400 hover:text-amber-900 font-bold px-1">+</button>
-                    </div>
-                    <button onClick={() => removeFromCart(item.id)} className="p-2 text-zinc-300 hover:text-red-500 transition">
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Form */}
