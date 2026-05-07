@@ -82,7 +82,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const totalPrice = cart.reduce((sum, item) => {
     const pairs = Math.floor(item.quantity / 2);
     const remainder = item.quantity % 2;
-    const itemTotal = (pairs * 15000) + (remainder * 10000);
+    const itemTotal = (pairs * 20000) + (remainder * 12000);
     return sum + itemTotal;
   }, 0);
 
